@@ -8,15 +8,7 @@ class ListActivity: ComponentActivity() {
 
     fun onCreate() {
         setContent {
-            Content()
-        }
-    }
-
-    @Composable
-    fun Content() {
-        val items = viewModel.items.observeAsState().value
-        items.forEach {
-            Text(text = it.name)
+            MainContent()
         }
     }
 
