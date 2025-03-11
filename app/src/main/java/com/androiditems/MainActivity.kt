@@ -2,12 +2,12 @@ package com.androiditems
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import com.androiditems.ui.MainContent
-import com.androiditems.viewmodels.ListViewModel
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel = ListViewModel()
+//    val viewModel = ListViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

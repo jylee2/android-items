@@ -4,16 +4,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiditems.models.Item
+//import com.androiditems.repositories.IItemsRepository
 import kotlinx.coroutines.launch
 
-class ListViewModel : ViewModel() {
+interface IListViewModel {
+    val items: MutableLiveData<Set<Item>>
+//    fun refreshItems()
+//    fun createItem(item: Item)
+}
 
-    val service = Service()
-    val items: MutableLiveData<Set<Item>> = MutableLiveData()
+class ListViewModel(
+//    private val itemsRepository: IItemsRepository
+) : ViewModel(), IListViewModel {
+
+    override val items: MutableLiveData<Set<Item>> = MutableLiveData()
 
     init {
         viewModelScope.launch {
-            items.value = service.loadItems()
+//            items.value = itemsRepository.loadItems()
         }
     }
 
