@@ -22,7 +22,8 @@ import com.androiditems.viewmodels.IItemViewModel
 
 @Composable
 fun CreateItem(
-    itemViewModel: IItemViewModel
+    itemViewModel: IItemViewModel,
+    navigateTo: (screen: String) -> Unit
 ) {
     val selectedItem = itemViewModel.selectedItem.collectAsStateWithLifecycle().value
     val createItemLoading = itemViewModel.createItemLoading.collectAsStateWithLifecycle().value
@@ -81,7 +82,9 @@ fun CreateItem(
                         // TODO: Show an alert dialog saying
                         return@Button
                     }
-                    itemViewModel.createItem(selectedItem)
+                    itemViewModel.createItem(selectedItem) {
+                        navigateTo(it)
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !createItemLoading
