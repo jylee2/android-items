@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,15 +24,17 @@ import com.androiditems.models.Item
 import com.androiditems.models.Result
 
 @Composable
-fun ItemRow(item: Item) {
+fun ItemRow(
+    item: Item,
+    navigateTo: (screen: String) -> Unit
+) {
 
 //    val selectedItemViewModel: SelectedItemViewModel = getViewModel()
-//    val appRouter: IAppRouter = get()
 
     fun onClick(item: Item) {
         // TODO: navigate to the Item Details screen
 //        selectedItemViewModel.setItem(item)
-//        appRouter.navigateTo(Routes.ItemDetails)
+        navigateTo(Screen.ItemDetails)
     }
 
     Row(
@@ -40,7 +43,7 @@ fun ItemRow(item: Item) {
             .padding(12.dp), // TODO: use a Theme.dp.md
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = item.name)
+        Text("Name: ${item.name}")
     }
 
 }
@@ -55,20 +58,26 @@ fun ItemsList(
     ) {
         when (itemsResult) {
             is Result.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
 
             is Result.Success -> {
-                LazyColumn {
-                    items(
-                        items = itemsResult.data,
-                        key = { it.id }
-                    ) { item ->
-                        ItemRow(item)
+                Column(
+                    modifier = Modifier.padding(12.dp)
+                ) {
+                    Text(
+                        text = "Items",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    LazyColumn {
+                        items(
+                            items = itemsResult.data,
+                            key = { it.id }
+                        ) { item ->
+                            ItemRow(item) {
+                                navigateTo(it)
+                            }
+                        }
                     }
                 }
             }
