@@ -15,7 +15,8 @@ interface IItemsService {
 
 class ItemsService() : IItemsService {
     override suspend fun loadItems(): Result<ByteArray> {
-        TODO("Not yet implemented")
+        // TODO: implement
+        return Result.Loading
 //        return withContext(Dispatchers.IO) f@{
 //            try {
 //                val url = "example.com/endpoint"
@@ -33,7 +34,8 @@ class ItemsService() : IItemsService {
     }
 
     override suspend fun createItem(item: Item): Result<Item> {
-        TODO("Not yet implemented")
+        // TODO: implement
+        return Result.Loading
 //        return withContext(Dispatchers.IO) f@{
 //            try {
 //                val json = Json { ignoreUnknownKeys = true }
@@ -54,11 +56,13 @@ class ItemsService() : IItemsService {
     }
 
     override suspend fun updateItem(item: Item): Result<Item> {
-        TODO("Not yet implemented")
+        // TODO: implement
+        return Result.Loading
     }
 
     override suspend fun deleteItem(item: Item): Result<String> {
-        TODO("Not yet implemented")
+        // TODO: implement
+        return Result.Loading
     }
 
 }
