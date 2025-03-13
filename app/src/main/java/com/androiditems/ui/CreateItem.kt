@@ -67,13 +67,16 @@ fun CreateItem(
         Row(
             modifier = Modifier.padding(10.dp)
         ) {
-            Button({
-                if (selectedItem == null) {
-                    // TODO: Show an alert dialog
-                    return@Button
-                }
-                itemViewModel.createItem(selectedItem)
-            }) {
+            Button(
+                onClick = {
+                    if (selectedItem == null) {
+                        // TODO: Show an alert dialog saying
+                        return@Button
+                    }
+                    itemViewModel.createItem(selectedItem)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Create Item")
             }
         }
