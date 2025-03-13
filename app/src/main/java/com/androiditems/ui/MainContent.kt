@@ -34,7 +34,9 @@ fun MainContent(
             }
         }
         composable(Screen.ItemDetails) {
-            ItemDetails(itemViewModel)
+            ItemDetails(itemViewModel) {
+                navController.navigate(it)
+            }
         }
         composable(Screen.CreateItem) {
             CreateItem(itemViewModel) {

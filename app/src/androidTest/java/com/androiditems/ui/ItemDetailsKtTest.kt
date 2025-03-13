@@ -25,10 +25,11 @@ class ItemDetailsKtTest {
         ).asStateFlow()
 
         composeTestRule.setContent {
-            ItemDetails(itemViewModel)
+            ItemDetails(itemViewModel) {}
         }
 
-        composeTestRule.onNodeWithText("Item 1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("ID: id1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Name: Item 1").assertIsDisplayed()
     }
 
 }
