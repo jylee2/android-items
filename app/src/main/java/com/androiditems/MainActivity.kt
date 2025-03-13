@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.androiditems.repositories.ItemsRepository
 import com.androiditems.services.ItemsService
 import com.androiditems.ui.MainContent
+import com.androiditems.usecases.GetItemsUseCase
 import com.androiditems.viewmodels.ItemViewModel
 import com.androiditems.viewmodels.ListViewModel
 
@@ -17,6 +18,7 @@ class MainActivity : ComponentActivity() {
     // TODO: Use dependency injection
     private val itemsService = ItemsService()
     private val itemsRepository = ItemsRepository(itemsService)
+    private val getItemsUseCase = GetItemsUseCase(itemsRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
             val listViewModel = viewModel<ListViewModel>(
                 factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return ListViewModel(itemsRepository) as T
+                        return ListViewModel(getItemsUseCase) as T
                     }
                 }
             )

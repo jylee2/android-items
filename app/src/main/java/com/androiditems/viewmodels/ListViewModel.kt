@@ -3,23 +3,24 @@ package com.androiditems.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiditems.models.Item
+import com.androiditems.models.Result
 import kotlinx.coroutines.flow.StateFlow
-import com.androiditems.repositories.IItemsRepository
+import com.androiditems.usecases.IGetItemsUseCase
 import kotlinx.coroutines.launch
 
 interface IListViewModel {
-    val items: StateFlow<List<Item>>
+    val items: StateFlow<Result<List<Item>>>
 }
 
 class ListViewModel(
-    private val itemsRepository: IItemsRepository
+    private val getItemsUseCase: IGetItemsUseCase
 ) : ViewModel(), IListViewModel {
 
-    override val items = itemsRepository.items
+    override val items = getItemsUseCase.items
 
     init {
         viewModelScope.launch f@{
-            itemsRepository.loadItems()
+            getItemsUseCase()
         }
     }
 

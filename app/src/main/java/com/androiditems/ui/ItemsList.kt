@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.androiditems.models.Item
+import com.androiditems.models.Result
 
 @Composable
 fun ItemRow(item: Item) {
@@ -45,20 +47,37 @@ fun ItemRow(item: Item) {
 
 @Composable
 fun ItemsList(
-    items: List<Item>,
+    itemsResult: Result<List<Item>>,
     navigateTo: (screen: String) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn {
-            items(
-                items = items,
-                key = { it.id }
-            ) { item ->
-                ItemRow(item)
+        when (itemsResult) {
+            is Result.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
+
+            is Result.Success -> {
+                LazyColumn {
+                    items(
+                        items = itemsResult.data,
+                        key = { it.id }
+                    ) { item ->
+                        ItemRow(item)
+                    }
+                }
+            }
+
+            else -> {
+                Text("An error occurred. Please try again later.")
             }
         }
+
         Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -76,13 +95,15 @@ fun ItemsList(
 @Preview
 @Composable
 fun ItemsListPreview() {
-    val items = listOf(
-        Item("id1", "name1"),
-        Item("id2", "name2"),
-        Item("id3", "name3"),
-        Item("id4", "name4"),
-        Item("id5", "name5"),
-        Item("id6", "name6")
+    val items = Result.Success(
+        listOf(
+            Item("id1", "name1"),
+            Item("id2", "name2"),
+            Item("id3", "name3"),
+            Item("id4", "name4"),
+            Item("id5", "name5"),
+            Item("id6", "name6")
+        )
     )
     ItemsList(items) {}
 }

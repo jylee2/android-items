@@ -28,8 +28,8 @@ fun MainContent(
         startDestination = Screen.ItemsList
     ) {
         composable(Screen.ItemsList) {
-            val itemsList = listViewModel.items.collectAsStateWithLifecycle().value
-            ItemsList(itemsList) {
+            val itemsResult = listViewModel.items.collectAsStateWithLifecycle().value
+            ItemsList(itemsResult) {
                 navController.navigate(it)
             }
         }
