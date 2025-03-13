@@ -61,6 +61,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
     testImplementation(libs.junit)
     testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
     androidTestImplementation("io.mockk:mockk-android:1.12.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
