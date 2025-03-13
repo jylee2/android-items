@@ -3,16 +3,19 @@ package com.androiditems
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import com.androiditems.ui.MainContent
+import com.androiditems.viewmodels.ListViewModel
 
 class MainActivity : ComponentActivity() {
 
-//    val viewModel = ListViewModel()
+    // TODO: Add dependency injection
+    private val listViewModel by viewModels<ListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainContent()
+            MainContent(listViewModel)
         }
     }
 
