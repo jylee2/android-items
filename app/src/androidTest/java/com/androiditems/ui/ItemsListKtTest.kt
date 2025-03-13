@@ -23,7 +23,7 @@ class ItemsListKtTest {
     @Test
     fun renderListOfItems() {
         composeTestRule.setContent {
-            ItemsList(testItems)
+            ItemsList(testItems) {}
         }
 
         composeTestRule.onNodeWithText("name1").assertIsDisplayed()

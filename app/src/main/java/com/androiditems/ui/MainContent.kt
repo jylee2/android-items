@@ -11,7 +11,8 @@ import com.androiditems.viewmodels.IListViewModel
 class Screen {
     companion object {
         val ItemsList = "ItemsList"
-        val ListDetails = "ListDetails"
+        val ItemDetails = "ItemDetails"
+        val AddItem = "AddItem"
     }
 }
 
@@ -28,9 +29,14 @@ fun MainContent(
     ) {
         composable(Screen.ItemsList) {
             val itemsList = listViewModel.items.collectAsStateWithLifecycle().value
-            ItemsList(itemsList)
+            ItemsList(itemsList) {
+                navController.navigate(it)
+            }
         }
-        composable(Screen.ListDetails) {
+        composable(Screen.ItemDetails) {
+            ItemDetails(itemViewModel)
+        }
+        composable(Screen.AddItem) {
             ItemDetails(itemViewModel)
         }
     }
