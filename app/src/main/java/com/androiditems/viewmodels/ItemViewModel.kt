@@ -1,17 +1,19 @@
 package com.androiditems.viewmodels
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiditems.models.Item
+import com.androiditems.models.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.androiditems.repositories.IItemsRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 interface IItemViewModel {
     val selectedItem: StateFlow<Item?>
+    val createItemLoading: StateFlow<Boolean>
     fun setSelectedItem(item: Item)
     fun clearSelectedItem()
     fun createItem(item: Item)
@@ -25,12 +27,8 @@ class ItemViewModel(
 
     private val _selectedItem = MutableStateFlow<Item?>(null)
     override val selectedItem = _selectedItem.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-//            items.value = itemsRepository.loadItems()
-        }
-    }
+    private val _createItemLoading = MutableStateFlow(false)
+    override val createItemLoading = _createItemLoading.asStateFlow()
 
     override fun setSelectedItem(item: Item) {
         _selectedItem.value = item
@@ -41,7 +39,22 @@ class ItemViewModel(
     }
 
     override fun createItem(item: Item) {
-        TODO("Not yet implemented")
+        _createItemLoading.value = true
+        viewModelScope.launch {
+            val result = async {
+                itemsRepository.createItem(item)
+            }.await()
+            when (result) {
+                is Result.Success -> {
+                    // TODO: show success message and navigate to Item details screen
+                }
+                is Result.Error<*> -> {
+                    // TODO: show error message
+                }
+                else -> {}
+            }
+            _createItemLoading.value = false
+        }
     }
 
     override fun updateItem(item: Item) {

@@ -5,10 +5,10 @@ import com.androiditems.models.Result
 import com.androiditems.services.IItemsService
 
 interface IItemsRepository {
-    fun loadItems(): Result<List<Item>>
-    fun createItem(item: Item)
-    fun updateItem(item: Item)
-    fun deleteItem(item: Item)
+    suspend fun loadItems(): Result<List<Item>>
+    suspend fun createItem(item: Item): Result<Item>
+    suspend fun updateItem(item: Item): Result<Item>
+    suspend fun deleteItem(item: Item): Result<String>
 }
 
 class ItemsRepository(
@@ -16,20 +16,20 @@ class ItemsRepository(
     private val itemsService: IItemsService
 ): IItemsRepository {
 
-    override fun loadItems(): Result<List<Item>> {
-        // TODO: call service method
+    override suspend fun loadItems(): Result<List<Item>> {
+        // TODO: If not in cache, then fetch from API
         return Result.Loading
     }
 
-    override fun createItem(item: Item) {
+    override suspend fun createItem(item: Item): Result<Item> {
+        return itemsService.createItem(item)
+    }
+
+    override suspend fun updateItem(item: Item): Result<Item> {
         TODO("Not yet implemented")
     }
 
-    override fun updateItem(item: Item) {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteItem(item: Item) {
+    override suspend fun deleteItem(item: Item): Result<String> {
         TODO("Not yet implemented")
     }
 
