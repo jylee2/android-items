@@ -14,12 +14,12 @@ class ItemsListKtTest {
     val composeTestRule = createComposeRule()
     private val testItems = Result.Success(
         listOf(
-            Item("id1", "name1"),
-            Item("id2", "name2"),
-            Item("id3", "name3"),
-            Item("id4", "name4"),
-            Item("id5", "name5"),
-            Item("id6", "name6")
+            Item("id1", "name11"),
+            Item("id2", "name22"),
+            Item("id3", "name33"),
+            Item("id4", "name44"),
+            Item("id5", "name55"),
+            Item("id6", "name66")
         )
     )
 
@@ -29,8 +29,8 @@ class ItemsListKtTest {
             ItemsList(testItems) {}
         }
 
-        composeTestRule.onNodeWithText("name1").assertIsDisplayed()
-        composeTestRule.onNodeWithText("name2").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Name: name11").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Name: name22").assertIsDisplayed()
     }
 
 }
