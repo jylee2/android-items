@@ -1,5 +1,6 @@
 package com.androiditems.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiditems.models.Item
@@ -9,17 +10,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import com.androiditems.repositories.IItemsRepository
 import kotlinx.coroutines.launch
 
-interface IListViewModel {
-    val items: StateFlow<List<Item>>
+interface IItemViewModel {
+    val selectedItem: StateFlow<Item?>
 //    fun refreshItems()
+//    fun createItem(item: Item)
 }
 
-class ListViewModel(
+class ItemViewModel(
     private val itemsRepository: IItemsRepository
-) : ViewModel(), IListViewModel {
+) : ViewModel(), IItemViewModel {
 
-    private val _items = MutableStateFlow<List<Item>>(mutableListOf())
-    override val items = _items.asStateFlow()
+    private val _selectedItem = MutableStateFlow<Item?>(null)
+    override val selectedItem = _selectedItem.asStateFlow()
 
     init {
         viewModelScope.launch {
