@@ -65,7 +65,7 @@ fun ItemsList(
                 .padding(20.dp)
         ) {
             FloatingActionButton(
-                onClick = { navigateTo(Screen.AddItem) },
+                onClick = { navigateTo(Screen.CreateItem) },
             ) {
                 Icon(Icons.Filled.Add, "Add")
             }

@@ -12,8 +12,11 @@ import kotlinx.coroutines.launch
 
 interface IItemViewModel {
     val selectedItem: StateFlow<Item?>
-//    fun refreshItems()
-//    fun createItem(item: Item)
+    fun setSelectedItem(item: Item)
+    fun clearSelectedItem()
+    fun createItem(item: Item)
+    fun updateItem(item: Item)
+    fun deleteItem(item: Item)
 }
 
 class ItemViewModel(
@@ -27,6 +30,26 @@ class ItemViewModel(
         viewModelScope.launch {
 //            items.value = itemsRepository.loadItems()
         }
+    }
+
+    override fun setSelectedItem(item: Item) {
+        _selectedItem.value = item
+    }
+
+    override fun clearSelectedItem() {
+        _selectedItem.value = null
+    }
+
+    override fun createItem(item: Item) {
+        TODO("Not yet implemented")
+    }
+
+    override fun updateItem(item: Item) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteItem(item: Item) {
+        TODO("Not yet implemented")
     }
 
 }

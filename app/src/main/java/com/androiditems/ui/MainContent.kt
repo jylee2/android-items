@@ -12,7 +12,7 @@ class Screen {
     companion object {
         val ItemsList = "ItemsList"
         val ItemDetails = "ItemDetails"
-        val AddItem = "AddItem"
+        val CreateItem = "CreateItem"
     }
 }
 
@@ -36,8 +36,8 @@ fun MainContent(
         composable(Screen.ItemDetails) {
             ItemDetails(itemViewModel)
         }
-        composable(Screen.AddItem) {
-            ItemDetails(itemViewModel)
+        composable(Screen.CreateItem) {
+            CreateItem(itemViewModel)
         }
     }
 
