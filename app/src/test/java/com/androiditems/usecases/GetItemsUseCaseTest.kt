@@ -32,7 +32,7 @@ class GetItemsUseCaseTest {
     }
 
     @Test
-    fun `invoke adds item to repository`(): Unit = runTest {
+    fun `invoke calls repository loadItems`(): Unit = runTest {
         useCase()
         coVerify { repository.loadItems() }
     }
