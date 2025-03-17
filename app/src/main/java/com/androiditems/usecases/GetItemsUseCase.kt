@@ -1,35 +1,22 @@
 package com.androiditems.usecases
 
-import com.androiditems.models.Item
-import com.androiditems.models.Result
 import com.androiditems.repositories.IItemsRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 
 interface IGetItemsUseCase {
-    val items: StateFlow<Result<List<Item>>>
-    suspend operator fun invoke(): Flow<Unit>
+    suspend operator fun invoke()
 }
 
 class GetItemsUseCase(
     private val itemsRepository: IItemsRepository
 ) : IGetItemsUseCase {
 
-    private val _items = MutableStateFlow<Result<List<Item>>>(Result.Loading)
-    override val items = _items.asStateFlow()
-
     /**
      * Depends on the backend
      */
-    override suspend operator fun invoke(): Flow<Unit> {
+    override suspend operator fun invoke() {
         val repositoryResult = itemsRepository.loadItems()
-        _items.value = repositoryResult
 
-        return flow {
-            // TODO: add snapshot listener to get the latest items
+        // TODO: add snapshot listener to get the latest items
 //            try {
 //                Firebase
 //                    .firestore(FirebaseApp.initializeApp(context, options, envKey))
@@ -51,6 +38,5 @@ class GetItemsUseCase(
 //            } catch (e: Exception) {
 //               recordException(e)
 //            }
-        }
     }
 }

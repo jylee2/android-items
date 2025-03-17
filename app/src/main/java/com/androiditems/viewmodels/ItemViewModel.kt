@@ -7,8 +7,8 @@ import com.androiditems.models.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.androiditems.repositories.IItemsRepository
 import com.androiditems.ui.Screen
+import com.androiditems.usecases.ICreateItemUseCase
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -27,7 +27,7 @@ interface IItemViewModel {
 }
 
 class ItemViewModel(
-    private val itemsRepository: IItemsRepository
+    private val createItemUseCase: ICreateItemUseCase
 ) : ViewModel(), IItemViewModel {
 
     private val _selectedItem = MutableStateFlow<Item?>(null)
@@ -50,7 +50,7 @@ class ItemViewModel(
         _createItemLoading.value = true
         viewModelScope.launch {
             val result = async {
-                itemsRepository.createItem(item)
+                createItemUseCase(item)
             }.await()
             when (result) {
                 is Result.Success -> {

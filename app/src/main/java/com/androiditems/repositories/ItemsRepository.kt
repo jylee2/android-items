@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 interface IItemsRepository {
+    val items: StateFlow<Result<List<Item>>>
     suspend fun loadItems(): Result<List<Item>>
     suspend fun createItem(item: Item): Result<Item>
     suspend fun updateItem(item: Item): Result<Item>
@@ -17,6 +18,9 @@ interface IItemsRepository {
 class ItemsRepository(
     private val itemsService: IItemsService
 ): IItemsRepository {
+
+    private val _items = MutableStateFlow<Result<List<Item>>>(Result.Loading)
+    override val items = _items.asStateFlow()
 
     override suspend fun loadItems(): Result<List<Item>> {
         // TODO: implement

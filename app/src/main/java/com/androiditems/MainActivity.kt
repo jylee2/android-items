@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.androiditems.repositories.ItemsRepository
 import com.androiditems.services.ItemsService
 import com.androiditems.ui.MainContent
+import com.androiditems.usecases.CreateItemUseCase
 import com.androiditems.usecases.GetItemsUseCase
 import com.androiditems.viewmodels.ItemViewModel
 import com.androiditems.viewmodels.ListViewModel
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
     private val itemsService = ItemsService()
     private val itemsRepository = ItemsRepository(itemsService)
     private val getItemsUseCase = GetItemsUseCase(itemsRepository)
+    private val createItemUseCase = CreateItemUseCase(itemsRepository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +28,14 @@ class MainActivity : ComponentActivity() {
             val listViewModel = viewModel<ListViewModel>(
                 factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return ListViewModel(getItemsUseCase) as T
+                        return ListViewModel(getItemsUseCase, itemsRepository) as T
                     }
                 }
             )
             val itemViewModel = viewModel<ItemViewModel>(
                 factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return ItemViewModel(itemsRepository) as T
+                        return ItemViewModel(createItemUseCase) as T
                     }
                 }
             )

@@ -2,9 +2,6 @@ package com.androiditems.services
 
 import com.androiditems.models.Item
 import com.androiditems.models.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 
 interface IItemsService {
     suspend fun loadItems(): Result<ByteArray>

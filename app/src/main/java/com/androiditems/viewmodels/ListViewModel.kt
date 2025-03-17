@@ -4,19 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiditems.models.Item
 import com.androiditems.models.Result
-import kotlinx.coroutines.flow.StateFlow
+import com.androiditems.repositories.IItemsRepository
 import com.androiditems.usecases.IGetItemsUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 interface IListViewModel {
-    val items: StateFlow<Result<List<Item>>>
+    val items: Flow<Result<List<Item>>>
 }
 
 class ListViewModel(
-    private val getItemsUseCase: IGetItemsUseCase
+    private val getItemsUseCase: IGetItemsUseCase,
+    private val itemsRepository: IItemsRepository
 ) : ViewModel(), IListViewModel {
 
-    override val items = getItemsUseCase.items
+    // TODO: map to UI-friendly data structure
+    override val items = itemsRepository.items
 
     init {
         viewModelScope.launch f@{
