@@ -19,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.androiditems.repositories.ItemsRepository
 import com.androiditems.services.ItemsService
+import com.androiditems.usecases.CreateItemUseCase
 import com.androiditems.viewmodels.IItemViewModel
 import com.androiditems.viewmodels.ItemViewModel
 
@@ -74,10 +75,11 @@ fun ItemDetails(
 fun ItemDetailsPreview() {
     val itemsService = ItemsService()
     val itemsRepository = ItemsRepository(itemsService)
+    val createItemUseCase = CreateItemUseCase(itemsRepository)
     val itemViewModel = viewModel<ItemViewModel>(
         factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return ItemViewModel(itemsRepository) as T
+                return ItemViewModel(createItemUseCase) as T
             }
         }
     )

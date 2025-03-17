@@ -5,6 +5,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.androiditems.models.Result
 import com.androiditems.viewmodels.IItemViewModel
 import com.androiditems.viewmodels.IListViewModel
 
@@ -28,7 +29,7 @@ fun MainContent(
         startDestination = Screen.ItemsList
     ) {
         composable(Screen.ItemsList) {
-            val itemsResult = listViewModel.items.collectAsStateWithLifecycle().value
+            val itemsResult = listViewModel.items.collectAsStateWithLifecycle(Result.Loading).value
             ItemsList(itemsResult) {
                 navController.navigate(it)
             }

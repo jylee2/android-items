@@ -1,9 +1,11 @@
 package com.androiditems.usecases
 
 import com.androiditems.repositories.IItemsRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface IGetItemsUseCase {
-    suspend operator fun invoke()
+    suspend operator fun invoke(): Flow<Unit>
 }
 
 class GetItemsUseCase(
@@ -13,9 +15,10 @@ class GetItemsUseCase(
     /**
      * Depends on the backend
      */
-    override suspend operator fun invoke() {
+    override suspend operator fun invoke(): Flow<Unit> {
         val repositoryResult = itemsRepository.loadItems()
 
+        return flow { }
         // TODO: add snapshot listener to get the latest items
 //            try {
 //                Firebase

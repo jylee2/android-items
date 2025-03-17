@@ -18,10 +18,10 @@ class GetItemsUseCaseTest {
     private val repository = mockk<IItemsRepository>()
     private lateinit var useCase: IGetItemsUseCase
     private val testResult = Result.Success(
-        listOf(
-            Item("id1", "name 1"),
-            Item("id2", "name 2"),
-            Item("id3", "name 3")
+        mapOf(
+            "id1" to Item("id1", "name 1"),
+            "id2" to Item("id2", "name 2"),
+            "id3" to Item("id3", "name 3")
         )
     )
 
