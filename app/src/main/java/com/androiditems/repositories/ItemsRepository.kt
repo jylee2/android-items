@@ -58,7 +58,13 @@ class ItemsRepository(
     }
 
     override suspend fun createItem(item: Item): Result<Item> {
-        return itemsService.createItem(item)
+        val newItem = itemsService.createItem(item)
+        val existingData = itemsById.value
+        if (newItem is Result.Success && existingData is Result.Success) {
+            _itemsById.value =
+                Result.Success(existingData.data + mapOf(newItem.data.id to newItem.data))
+        }
+        return newItem
     }
 
     override suspend fun updateItem(item: Item): Result<Item> {
