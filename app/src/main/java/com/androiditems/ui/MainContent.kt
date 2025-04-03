@@ -6,11 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.androiditems.models.Result
+import com.androiditems.security.ICryptoManager
 import com.androiditems.viewmodels.IItemViewModel
 import com.androiditems.viewmodels.IListViewModel
 
 class Screen {
     companion object {
+        val Login = "Login"
         val ItemsList = "ItemsList"
         val ItemDetails = "ItemDetails"
         val CreateItem = "CreateItem"
@@ -20,14 +22,18 @@ class Screen {
 @Composable
 fun MainContent(
     listViewModel: IListViewModel,
-    itemViewModel: IItemViewModel
+    itemViewModel: IItemViewModel,
+    cryptoManager: ICryptoManager
 ) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.ItemsList
+        startDestination = Screen.Login
     ) {
+        composable(Screen.Login) {
+            LoginScreen(cryptoManager)
+        }
         composable(Screen.ItemsList) {
             val itemsResult = listViewModel.items.collectAsStateWithLifecycle(Result.Loading).value
             ItemsList(itemsResult) {
