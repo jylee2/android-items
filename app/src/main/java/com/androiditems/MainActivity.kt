@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.androiditems.repositories.ItemsRepository
+import com.androiditems.security.CryptoManager
 import com.androiditems.services.ItemsService
 import com.androiditems.ui.MainContent
 import com.androiditems.usecases.CreateItemUseCase
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     private val itemsRepository = ItemsRepository(itemsService)
     private val getItemsUseCase = GetItemsUseCase(itemsRepository)
     private val createItemUseCase = CreateItemUseCase(itemsRepository)
+    private val cryptoManager = CryptoManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 }
             )
 
-            MainContent(listViewModel, itemViewModel)
+            MainContent(listViewModel, itemViewModel, cryptoManager)
         }
     }
 
